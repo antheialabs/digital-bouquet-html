@@ -9,7 +9,7 @@
 
         :root {
             --bg-color: #FDF6F0; /* Cream Lembut */
-            --card-bg: rgba(255, 255, 255, 0.8);
+            --card-bg: rgba(255, 255, 255, 0.85); /* Sedikit lebih solid */
             --text-primary: #5D4037; /* Coklat Tua */
             --flower-color: #E6A4B4; /* Dusty Pink */
             --center-color: #F3D7CA;
@@ -33,11 +33,15 @@
             background: var(--card-bg);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            padding: 40px;
+            padding: 40px 30px; /* Padding samping sedikit dikurangi biar luas */
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             max-width: 85%;
             width: 350px;
+            /* Max height screen agar tidak terlalu panjang di HP kecil */
+            max-height: 90vh; 
+            display: flex;
+            flex-direction: column;
             border: 1px solid rgba(255,255,255,0.5);
             animation: float 6s ease-in-out infinite;
         }
@@ -45,96 +49,133 @@
         /* Typography */
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 5px;
             font-weight: 400;
             font-style: italic;
+            opacity: 0.8;
         }
 
         .recipient-name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 600;
-            margin: 10px 0 20px 0;
+            margin: 5px 0 20px 0;
             letter-spacing: 1px;
             line-height: 1.1;
+            word-break: break-word; /* Jaga2 kalau nama panjang tanpa spasi */
+        }
+
+        /* --- NEW: Message Container dengan Scrollbar --- */
+        .message-container {
+            /* Batasi tinggi area pesan, sekitar 8-10 baris */
+            max-height: 180px; 
+            /* Munculkan scrollbar jika teks melebihi tinggi */
+            overflow-y: auto;
+            margin-bottom: 25px;
+            padding-right: 10px; /* Ruang untuk scrollbar */
+            
+            /* Styling Scrollbar untuk Firefox */
+            scrollbar-width: thin;
+            scrollbar-color: var(--flower-color) transparent;
+        }
+
+        /* Styling Scrollbar untuk Chrome, Edge, Safari */
+        .message-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .message-container::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        .message-container::-webkit-scrollbar-thumb {
+            background-color: var(--flower-color); 
+            border-radius: 10px;
+            opacity: 0.5;
         }
 
         .message {
             font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            line-height: 1.7;
             color: #795548;
+            margin: 0; /* Reset margin bawaan <p> */
+            /* Pastikan teks panjang turun ke bawah, bukan nabrak samping */
+            white-space: pre-wrap; /* Mempertahankan enter/line break dari URL */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
+        /* ----------------------------------------------- */
 
         .sender {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 2px;
             opacity: 0.7;
+            margin-top: auto; /* Dorong ke bawah */
         }
 
         /* CSS Animated Flower */
         .flower-container {
             position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 30px auto;
+            width: 90px; /* Sedikit diperkecil */
+            height: 90px;
+            margin: 0 auto 25px auto;
+            flex-shrink: 0; /* Biar bunga gak gepeng */
         }
 
         .flower {
             position: absolute;
             width: 100%;
             height: 100%;
-            animation: spin 20s linear infinite;
+            animation: spin 25s linear infinite; /* Lebih pelan biar calm */
         }
 
         .petal {
             position: absolute;
-            width: 30px;
-            height: 50px;
+            width: 28px;
+            height: 45px;
             background: var(--flower-color);
             border-radius: 50px 50px 0 0;
-            left: 35px;
-            top: 25px;
+            left: 31px;
+            top: 22px;
             transform-origin: bottom center;
-            opacity: 0.8;
-            box-shadow: 0 0 10px rgba(230, 164, 180, 0.3);
+            opacity: 0.85;
+            box-shadow: 0 0 10px rgba(230, 164, 180, 0.2);
         }
 
-        .petal:nth-child(1) { transform: rotate(0deg) translateY(-20px); }
-        .petal:nth-child(2) { transform: rotate(45deg) translateY(-20px); }
-        .petal:nth-child(3) { transform: rotate(90deg) translateY(-20px); }
-        .petal:nth-child(4) { transform: rotate(135deg) translateY(-20px); }
-        .petal:nth-child(5) { transform: rotate(180deg) translateY(-20px); }
-        .petal:nth-child(6) { transform: rotate(225deg) translateY(-20px); }
-        .petal:nth-child(7) { transform: rotate(270deg) translateY(-20px); }
-        .petal:nth-child(8) { transform: rotate(315deg) translateY(-20px); }
+        /* Rotasi kelopak */
+        .petal:nth-child(1) { transform: rotate(0deg) translateY(-18px); }
+        .petal:nth-child(2) { transform: rotate(45deg) translateY(-18px); }
+        .petal:nth-child(3) { transform: rotate(90deg) translateY(-18px); }
+        .petal:nth-child(4) { transform: rotate(135deg) translateY(-18px); }
+        .petal:nth-child(5) { transform: rotate(180deg) translateY(-18px); }
+        .petal:nth-child(6) { transform: rotate(225deg) translateY(-18px); }
+        .petal:nth-child(7) { transform: rotate(270deg) translateY(-18px); }
+        .petal:nth-child(8) { transform: rotate(315deg) translateY(-18px); }
 
         .center {
             position: absolute;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             background: var(--center-color);
             border-radius: 50%;
-            top: 40px;
-            left: 40px;
+            top: 36px;
+            left: 36px;
             z-index: 2;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
         }
 
         /* Animations */
         @keyframes spin { 100% { transform: rotate(360deg); } }
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
             100% { transform: translateY(0px); }
         }
 
         .footer {
-            margin-top: 30px;
+            margin-top: 25px;
             font-size: 0.6rem;
-            opacity: 0.5;
+            opacity: 0.4;
+            letter-spacing: 1px;
         }
     </style>
 </head>
@@ -143,39 +184,40 @@
     <div class="card">
         <div class="flower-container">
             <div class="flower">
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
-                <div class="petal"></div>
+                <div class="petal"></div><div class="petal"></div>
+                <div class="petal"></div><div class="petal"></div>
+                <div class="petal"></div><div class="petal"></div>
+                <div class="petal"></div><div class="petal"></div>
                 <div class="center"></div>
             </div>
         </div>
 
         <h1 id="headerText">For Someone Special</h1>
         <div class="recipient-name" id="recipient">You</div>
-        <p class="message" id="msg">
-            "Every flower blooms in its own time."
-        </p>
+        
+        <div class="message-container">
+            <p class="message" id="msg">
+                "Every flower blooms in its own time."
+            </p>
+        </div>
         <div class="sender" id="sender"></div>
 
         <div class="footer">Antheia Blooms • Surabaya</div>
     </div>
 
     <script>
-        // Logic buat nangkep URL Parameter
         document.addEventListener('DOMContentLoaded', function() {
             const params = new URLSearchParams(window.location.search);
             
-            // Ambil data dari URL, kalau kosong pakai default
             const toName = params.get('to') || 'Beautiful Soul';
-            const message = params.get('msg') || 'May your day be as beautiful as these flowers.';
-            const fromName = params.get('from'); // Bisa kosong kalau secret admirer
+            // Menggunakan decodeURIComponent agar karakter spesial (seperti enter/paragraf) terbaca
+            let message = params.get('msg') || 'May your day be as beautiful as these flowers.';
+            
+            // Opsional: Fitur agar bisa pakai enter di URL (gunakan %0A di URL untuk enter)
+            message = decodeURIComponent(message); 
 
-            // Masukkan ke HTML
+            const fromName = params.get('from'); 
+
             document.getElementById('recipient').innerText = toName;
             document.getElementById('msg').innerText = message;
             
@@ -185,7 +227,6 @@
                 document.getElementById('sender').style.display = 'none';
             }
 
-            // Ganti Title Tab Browser
             document.title = `Untuk ${toName} | Antheia Blooms`;
         });
     </script>
