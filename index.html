@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antheia Blooms - Special Gift</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300&display=swap');
+
+        :root {
+            --bg-color: #FDF6F0; /* Cream Lembut */
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --text-primary: #5D4037; /* Coklat Tua */
+            --flower-color: #E6A4B4; /* Dusty Pink */
+            --center-color: #F3D7CA;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            color: var(--text-primary);
+        }
+
+        /* Glassmorphism Card */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            max-width: 85%;
+            width: 350px;
+            border: 1px solid rgba(255,255,255,0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Typography */
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            font-weight: 400;
+            font-style: italic;
+        }
+
+        .recipient-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 10px 0 20px 0;
+            letter-spacing: 1px;
+            line-height: 1.1;
+        }
+
+        .message {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #795548;
+        }
+
+        .sender {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.7;
+        }
+
+        /* CSS Animated Flower */
+        .flower-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 30px auto;
+        }
+
+        .flower {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            animation: spin 20s linear infinite;
+        }
+
+        .petal {
+            position: absolute;
+            width: 30px;
+            height: 50px;
+            background: var(--flower-color);
+            border-radius: 50px 50px 0 0;
+            left: 35px;
+            top: 25px;
+            transform-origin: bottom center;
+            opacity: 0.8;
+            box-shadow: 0 0 10px rgba(230, 164, 180, 0.3);
+        }
+
+        .petal:nth-child(1) { transform: rotate(0deg) translateY(-20px); }
+        .petal:nth-child(2) { transform: rotate(45deg) translateY(-20px); }
+        .petal:nth-child(3) { transform: rotate(90deg) translateY(-20px); }
+        .petal:nth-child(4) { transform: rotate(135deg) translateY(-20px); }
+        .petal:nth-child(5) { transform: rotate(180deg) translateY(-20px); }
+        .petal:nth-child(6) { transform: rotate(225deg) translateY(-20px); }
+        .petal:nth-child(7) { transform: rotate(270deg) translateY(-20px); }
+        .petal:nth-child(8) { transform: rotate(315deg) translateY(-20px); }
+
+        .center {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--center-color);
+            border-radius: 50%;
+            top: 40px;
+            left: 40px;
+            z-index: 2;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+        }
+
+        /* Animations */
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.6rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="flower-container">
+            <div class="flower">
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="petal"></div>
+                <div class="center"></div>
+            </div>
+        </div>
+
+        <h1 id="headerText">For Someone Special</h1>
+        <div class="recipient-name" id="recipient">You</div>
+        <p class="message" id="msg">
+            "Every flower blooms in its own time."
+        </p>
+        <div class="sender" id="sender"></div>
+
+        <div class="footer">Antheia Blooms • Surabaya</div>
+    </div>
+
+    <script>
+        // Logic buat nangkep URL Parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            const params = new URLSearchParams(window.location.search);
+            
+            // Ambil data dari URL, kalau kosong pakai default
+            const toName = params.get('to') || 'Beautiful Soul';
+            const message = params.get('msg') || 'May your day be as beautiful as these flowers.';
+            const fromName = params.get('from'); // Bisa kosong kalau secret admirer
+
+            // Masukkan ke HTML
+            document.getElementById('recipient').innerText = toName;
+            document.getElementById('msg').innerText = message;
+            
+            if(fromName) {
+                document.getElementById('sender').innerText = "FROM: " + fromName;
+            } else {
+                document.getElementById('sender').style.display = 'none';
+            }
+
+            // Ganti Title Tab Browser
+            document.title = `Untuk ${toName} | Antheia Blooms`;
+        });
+    </script>
+</body>
+</html>
